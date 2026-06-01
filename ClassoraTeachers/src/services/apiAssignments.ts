@@ -171,3 +171,34 @@ export async function getAssignmentDetail(id: number) {
 
   return data;
 }
+
+export async function updateAssignment(id: number, newData: any) {
+  const { data, error } = await supabase
+    .from("assignments")
+    .update(newData)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function updateAssignmentStatus({
+  id,
+  status,
+}: {
+  id: number;
+  status: "published" | "archived" | "draft";
+}) {
+  const { data, error } = await supabase
+    .from("assignments")
+    .update({ status })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

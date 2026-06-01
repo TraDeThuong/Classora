@@ -1,5 +1,3 @@
-import { HiOutlineUser } from "react-icons/hi";
-import ButtonIcon from "./ButtonIcon";
 import Logout from "./Logout";
 import UserAvatar from "./UserAvartar";
 import Logo from "./Logo";
@@ -12,11 +10,6 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
             <UserAvatar />
-
-            <ButtonIcon>
-                <HiOutlineUser />
-            </ButtonIcon>
-
             <Logout />
         </div>
 

@@ -7,6 +7,8 @@ import { getAssignmentType } from "../../utils/getAssignmentType";
 import { useCreateAssignment } from "./useCreateAssignment";
 import { useClasses } from "../classes/useClasses";
 import type { NewAssignment } from "../../services/apiAssignments";
+import toast from "react-hot-toast";
+import { useUpdateAssignment } from "./useUpdateAssignment";
 
 type QuestionType = "" | "mcq" | "essay";
 
@@ -33,9 +35,45 @@ interface AssignmentFormValues {
   status: "draft" | "published" | "archived";
 }
 
-export default function CreateAssignmentsForm() {
+interface CreateAssignmentsFormProps {
+  assignmentToEdit?: any;
+  onCloseModal?: () => void;
+}
+
+
+export default function CreateAssignmentsForm({onCloseModal, assignmentToEdit} : CreateAssignmentsFormProps) {
   const { classes = [] } = useClasses();
   const { mutate, isPending: isCreating } = useCreateAssignment();
+  const { editAssignment, isEditing } = useUpdateAssignment();
+  const isWorking = isCreating || isEditing;
+
+  const isEditSession = Boolean(assignmentToEdit?.id);
+  const editId = assignmentToEdit?.id;
+
+  const formatQuestionsForForm = (questions: any[] = []): QuestionFormValues[] => {
+    return questions.map((question): QuestionFormValues => {
+      let correctAnswer: "A" | "B" | "C" | "D" | undefined;
+
+      if (question.correctAnswer === 0) correctAnswer = "A";
+      else if (question.correctAnswer === 1) correctAnswer = "B";
+      else if (question.correctAnswer === 2) correctAnswer = "C";
+      else if (question.correctAnswer === 3) correctAnswer = "D";
+      else correctAnswer = undefined;
+
+      return {
+        type: question.type === "mcq" ? "mcq" : "essay",
+        questionText: question.questionText ?? "",
+        points: question.points ?? 1,
+
+        optionA: question.options?.[0] ?? "",
+        optionB: question.options?.[1] ?? "",
+        optionC: question.options?.[2] ?? "",
+        optionD: question.options?.[3] ?? "",
+
+        correctAnswer,
+      };
+    });
+  };
 
   const {
     register,
@@ -43,19 +81,39 @@ export default function CreateAssignmentsForm() {
     handleSubmit,
     watch,
     reset,
-    formState: { errors},
+    formState: { errors },
   } = useForm<AssignmentFormValues>({
-      defaultValues: {
-        classId: "",
-        title: "",
-        description: "",
-        totalScore: 10,
-        dueDate: "",
-        allowLateSubmit: false,
-        publishTime: "",
-        status: "draft",
-        questions: [],
-      },
+    defaultValues: isEditSession
+      ? {
+          classId: String(assignmentToEdit.class_id),
+          title: assignmentToEdit.title,
+          description: assignmentToEdit.description ?? "",
+          totalScore: assignmentToEdit.total_score ?? 10,
+          dueDate: assignmentToEdit.due_date
+            ? new Date(assignmentToEdit.due_date)
+                .toISOString()
+                .slice(0, 16)
+            : "",
+          allowLateSubmit: assignmentToEdit.allow_late_submit ?? false,
+          publishTime: assignmentToEdit.published_at
+            ? new Date(assignmentToEdit.published_at)
+                .toISOString()
+                .slice(0, 16)
+            : "",
+          status: assignmentToEdit.status ?? "draft",
+          questions: formatQuestionsForForm(assignmentToEdit.questions),
+        }
+      : {
+          classId: "",
+          title: "",
+          description: "",
+          totalScore: 10,
+          dueDate: "",
+          allowLateSubmit: false,
+          publishTime: "",
+          status: "draft",
+          questions: [],
+        },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -64,11 +122,27 @@ export default function CreateAssignmentsForm() {
   });
 
   const questions = watch("questions");
+  const now = new Date();
+
+  const toDate = (value: string) => new Date(value);
+
+  const dueDate = watch("dueDate");
+  const publishTime = watch("publishTime");
   
 
   const onSubmit: SubmitHandler<AssignmentFormValues> = (data) => {
   if (data.questions.length === 0) {
-    alert("Assignment must contain at least one question");
+    toast.error("Assignment must contain at least one question");
+    return;
+  }
+
+  const totalQuestionPoints = data.questions.reduce(
+    (sum, question) => sum + Number(question.points || 0),
+    0,
+  );
+
+  if (totalQuestionPoints !== data.totalScore) {
+    toast.error("Total question points must equal total score");
     return;
   }
 
@@ -77,7 +151,7 @@ export default function CreateAssignmentsForm() {
     );
 
     if (hasInvalidQuestion) {
-      alert("All questions must have a type");
+      toast.error("All questions must have a type");
       return;
     }
 
@@ -122,11 +196,24 @@ export default function CreateAssignmentsForm() {
     })),
   };
 
-  mutate(newAssignment, {
-    onSuccess: () => {
-      reset();
-    },
-  });
+  if (isEditSession) {
+    editAssignment(
+      { id: editId, newData: newAssignment },
+      {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      }
+    );
+  } else {
+    mutate(newAssignment, {
+      onSuccess: () => {
+        reset();
+        onCloseModal?.();
+      },
+    });
+  }
   };
 
   return (
@@ -177,8 +264,22 @@ export default function CreateAssignmentsForm() {
         <FormRow label="Due Date" error={errors.dueDate?.message}>
           <FormInput
             type="datetime-local"
+            min={new Date().toISOString().slice(0, 16)}
             {...register("dueDate", {
               required: "Due date is required",
+              validate: (value) => {
+                const due = toDate(value);
+
+                if (!isEditSession && due <= now) {
+                  return "Due date must be later than today";
+                }
+
+                if (publishTime && due <= toDate(publishTime)) {
+                  return "Due date must be after publish time";
+                }
+
+                return true;
+              },
             })}
           />
         </FormRow>
@@ -187,8 +288,22 @@ export default function CreateAssignmentsForm() {
       <FormRow label="Publish Time" error={errors.publishTime?.message}>
         <FormInput
           type="datetime-local"
+          min={new Date().toISOString().slice(0, 16)}
           {...register("publishTime", {
             required: "Publish time is required",
+            validate: (value) => {
+              const publish = toDate(value);
+
+              if (!isEditSession && publish < now) {
+                return "Publish time cannot be in the past";
+              }
+
+              if (dueDate && publish >= toDate(dueDate)) {
+                return "Publish time must be before due date";
+              }
+
+              return true;
+            },
           })}
         />
       </FormRow>
@@ -366,10 +481,16 @@ export default function CreateAssignmentsForm() {
       <div className="mt-4 flex justify-end gap-4">
         <button
           type="submit"
-          disabled={isCreating}
-          className="rounded-2xl bg-brand-200 px-6 py-3 text-xl font-semibold text-white transition-all hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none"
+          disabled={isWorking}
+          className="rounded-2xl bg-brand-200 px-6 py-3 text-xl font-semibold text-white transition-all hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isCreating ? "Creating..." : "Create assignment"}
+          {isWorking
+            ? isEditSession
+              ? "Updating..."
+              : "Creating..."
+            : isEditSession
+            ? "Update Assignment"
+            : "Create Assignment"}
         </button>
       </div>
     </form>

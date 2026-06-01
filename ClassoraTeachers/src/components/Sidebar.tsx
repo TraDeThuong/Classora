@@ -1,11 +1,11 @@
 import {
   HiAcademicCap,
-  HiBookOpen,
   HiClipboardList,
   HiOutlineHome,
 } from "react-icons/hi";
 
 import NavItem from "./NavItem";
+import { HiOutlineUser } from "react-icons/hi2";
 
 export default function SideBar() {
   return (
@@ -30,7 +30,7 @@ export default function SideBar() {
         </li>
 
         <li>
-          <NavItem to="/results" icon={HiBookOpen}>
+          <NavItem to="/profile" icon={HiOutlineUser}>
             Profile
           </NavItem>
         </li>

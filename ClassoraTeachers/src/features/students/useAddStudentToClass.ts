@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addStudentToClass } from "../../services/apiClassStudents";
 
-
 export function useAddStudentToClass(classId: number) {
   const queryClient = useQueryClient();
 
@@ -9,13 +8,17 @@ export function useAddStudentToClass(classId: number) {
     mutationFn: addStudentToClass,
 
     onSuccess: () => {
-    queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["class-students", classId],
-    });
+      });
 
-    queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
+        queryKey: ["students"],
+      });
+
+      queryClient.invalidateQueries({
         queryKey: ["students", "search"],
-    });
+      });
     },
   });
 

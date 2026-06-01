@@ -11,7 +11,7 @@ export function useCreateAssignment() {
     onSuccess: () => {
         toast.success ("New Assignment successfully created")
         queryClient.invalidateQueries({
-            queryKey: ["assignment"],
+            queryKey: ["assignments"],
         });
     },
 

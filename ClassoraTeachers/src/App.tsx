@@ -15,8 +15,8 @@ import { Toaster } from "react-hot-toast";
 import AuthCallback from "./features/authentication/AuthCallback";
 import CompleteSignUp from "./features/authentication/CompleteSignUp";
 import ProtectRoute from "./components/ProtectRoute";
-import AssignmentDetail from "./features/assignments/AssignmentDetail";
 import ClassDetail from "./pages/ClassDetail";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +42,7 @@ export default function App() {
             <Route path="classes" element={<Classes />} />
             <Route path="results" element={<Results />} />
             <Route path="assignments" element={<Assignments />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="/classes/:classId" element={<ClassDetail />} />
           </Route>
 

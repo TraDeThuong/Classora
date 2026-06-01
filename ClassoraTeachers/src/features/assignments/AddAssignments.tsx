@@ -15,7 +15,7 @@ export default function AddClass () {
           </Modal.Open>
 
           <Modal.Window name = "cabin-form">
-            <CreateAssignmentsForm/>
+            <CreateAssignmentsForm />
           </Modal.Window>
 
         </Modal>

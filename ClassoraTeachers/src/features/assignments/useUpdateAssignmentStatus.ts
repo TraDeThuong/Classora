@@ -1,18 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateScheduleStatus } from "../../services/apiCalendars";
+import { updateAssignmentStatus } from "../../services/apiAssignments";
 import toast from "react-hot-toast";
 
-export function useUpdateScheduleStatus() {
+
+export function useUpdateAssignmentStatus() {
   const queryClient = useQueryClient();
 
   const { mutate: updateStatus, isPending: isUpdating } = useMutation({
-    mutationFn: updateScheduleStatus,
+    mutationFn: updateAssignmentStatus,
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["schedules"],
+        queryKey: ["assignments"],
       });
-      toast.success ("Schedule status updated successfully!")
+      toast.success ("Assignment status updated successfully!")
     },
   });
 

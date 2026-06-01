@@ -13,6 +13,10 @@ export function useDeleteClassStudent(classId: number) {
       });
 
       queryClient.invalidateQueries({
+        queryKey: ["students"],
+      });
+
+      queryClient.invalidateQueries({
         queryKey: ["students", "search"],
       });
     },

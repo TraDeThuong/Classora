@@ -5,6 +5,7 @@ interface ConfirmStatusActionProps {
   message: string;
   confirmLabel: string;
   confirmVariation?: "primary" | "secondary" | "danger";
+  status?: "draft" | "published" | "archived";
   disabled?: boolean;
   onConfirm: () => void;
   onCloseModal?: () => void;
