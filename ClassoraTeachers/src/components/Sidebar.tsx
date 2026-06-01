@@ -31,9 +31,10 @@ export default function SideBar() {
 
         <li>
           <NavItem to="/results" icon={HiBookOpen}>
-            Results
+            Profile
           </NavItem>
         </li>
+
       </ul>
     </nav>
   );

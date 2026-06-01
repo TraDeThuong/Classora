@@ -1,34 +1,6 @@
-// export default function Class() {
-//   return (
-//     <div
-//       className="flex w-full sm:w-mn flex-col overflow-hidden rounded-2xl bg-brand-200 shadow-lg">
-//       <div className="aspect-video overflow-hidden">
-//         <img
-//           src="src/assets/img/thumbnail_1.png"
-//           alt="Class thumbnail"
-//           className="h-full w-full object-cover"
-//         />
-//       </div>
-//       <div className="flex flex-col items-center gap-2 p-5 text-center text-white">
-//         <h3 className="mb-3 text-2xl font-bold sm:text-3xl">
-//           Web Design
-//         </h3>
-
-//         <p className="text-sm sm:text-base">Class Code: 124679</p>
-//         <p className="text-sm sm:text-base">Teacher: Huynh Thanh Tra</p>
-//         <p className="text-sm sm:text-base">Students: 30</p>
-//         <p className="text-sm sm:text-base">Assignments: 6</p>
-
-//         <p className="mt-2 rounded-full bg-white/20 px-4 py-1 text-sm font-semibold">
-//           Status: Active
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
-
 import { ClassStatus } from "../../components/ClassStatus";
 import type { Class } from "../../types/classes";
+import { Link } from "react-router-dom";
 
 interface ClassCardProps {
   classItem: Class;
@@ -36,34 +8,80 @@ interface ClassCardProps {
 
 export default function ClassCard({ classItem }: ClassCardProps) {
   return (
-    <div className="flex w-full sm:w-mn flex-col overflow-hidden rounded-2xl bg-brand-200 shadow-lg">
-      <div className="aspect-video overflow-hidden">
-        <img
-          src={classItem.thumbnail ?? "/default-thumbnail.png"}
-          alt={classItem.class_name}
-          className="h-full w-full object-cover"
-        />
+    <Link to={`/classes/${classItem.id}`} className="group block w-full">
+      <div className="
+        flex flex-col overflow-hidden rounded-2xl bg-white
+        border border-gray-100 shadow-sm
+        transition-all duration-300 ease-[cubic-bezier(.34,1.56,.64,1)]
+        group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-xl
+      ">
+        {/* Thumbnail */}
+        <div className="relative aspect-video overflow-hidden">
+          <img
+            src={classItem.thumbnail ?? "/default-thumbnail.png"}
+            alt={classItem.class_name}
+            className="
+              h-full w-full object-cover
+              transition-transform duration-500
+              group-hover:scale-105
+            "
+          />
+          {/* overlay on hover */}
+          <div className="
+            absolute inset-0 bg-black/0
+            transition-all duration-300
+            group-hover:bg-black/10
+          "/>
+          {/* status badge float trên thumbnail */}
+          <div className="absolute bottom-3 left-3">
+            <ClassStatus status={classItem.status} />
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="flex flex-col gap-3 p-5">
+          <h3 className="
+            line-clamp-1 text-md font-semibold text-gray-900
+            transition-colors duration-200 group-hover:text-violet-600
+          ">
+            {classItem.class_name}
+          </h3>
+
+          <div className="space-y-1.5 text-lg text-gray-500">
+            <div className="flex items-center justify-between">
+              <span className="text-gray-400">Class code</span>
+              <span className="font-medium text-gray-700">{classItem.class_code}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-400">Room</span>
+              <span className="font-medium text-gray-700">
+                {classItem.room ?? "Not specified"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-400">Students</span>
+              <span className="font-medium text-gray-700">{classItem.max_students}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="
+          flex items-center justify-between
+          border-t border-gray-100 px-5 py-3
+          transition-colors duration-200
+          group-hover:bg-violet-50/50
+        ">
+          <span className="text-lg text-gray-400">View details</span>
+          <span className="
+            text-lg font-medium text-violet-500
+            translate-x-0 transition-transform duration-200
+            group-hover:translate-x-1
+          ">
+            → 
+          </span>
+        </div>
       </div>
-
-      <div className="flex flex-col items-center gap-2 p-5 text-center text-white">
-        <h3 className="mb-3 text-2xl font-bold sm:text-3xl">
-          {classItem.class_name}
-        </h3>
-
-        <p className="text-sm sm:text-base">
-          Class Code: {classItem.class_code}
-        </p>
-
-        <p className="text-sm sm:text-base">
-          Room: {classItem.room ?? "Not specified"}
-        </p>
-
-        <p className="text-sm sm:text-base">
-          Students: {classItem.max_students}
-        </p>
-        
-        <ClassStatus status={classItem.status}/>
-      </div>
-    </div>
+    </Link>
   );
 }

@@ -1,6 +1,7 @@
 interface SpinnerProps {
   size?: "sm" | "md" | "lg";
   color?: "primary" | "teal" | "gray" | "white";
+  fullHeight?: boolean;
 }
 
 const sizes = {
@@ -19,16 +20,24 @@ const colors = {
 export default function Spinner({
   size = "md",
   color = "primary",
+  fullHeight = false,
 }: SpinnerProps) {
   return (
     <div
-      role="status"
-      aria-label="Loading"
       className={`
-        animate-spin rounded-full
-        ${sizes[size]}
-        ${colors[color]}
+        flex justify-center items-center
+        ${fullHeight ? "h-full" : ""}
       `}
-    />
+    >
+      <div
+        role="status"
+        aria-label="Loading"
+        className={`
+          animate-spin rounded-full
+          ${sizes[size]}
+          ${colors[color]}
+        `}
+      />
+    </div>
   );
 }

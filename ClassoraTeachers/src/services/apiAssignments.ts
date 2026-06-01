@@ -136,3 +136,38 @@ export async function getAssignmentsByClassId(classId: number) {
 
   return data;
 }
+
+
+export async function deleteAssignment(id: number) {
+  const { error } = await supabase
+    .from("assignments")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Assignment could not be deleted");
+  }
+}
+
+export async function getAssignmentDetail(id: number) {
+  const { data, error } = await supabase
+    .from("assignments")
+    .select(
+      `
+      *,
+      teachers (
+        full_name
+      )
+    `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Assignment could not be loaded");
+  }
+
+  return data;
+}

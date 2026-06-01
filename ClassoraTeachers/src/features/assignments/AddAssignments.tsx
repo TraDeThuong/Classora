@@ -10,7 +10,7 @@ export default function AddClass () {
         <Modal>
           <Modal.Open opens ="cabin-form">
             <div className = "text-brand-50">
-                <Button size="large" variation="primary">Create Assignments</Button>
+                <Button size="large" variation="primary">Create Assignment</Button>
             </div>
           </Modal.Open>
 
