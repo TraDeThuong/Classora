@@ -148,3 +148,49 @@ export async function getClassByClassId(classId: number) {
 
   return data;
 }
+
+
+export async function updateClass({
+  id,
+  newClassData,
+}: {
+  id: number;
+  newClassData: {
+    class_name: string;
+    description: string | null;
+    max_students: number;
+    room: string | null;
+    start_date: string;
+    end_date: string;
+  };
+}) {
+  const { data, error } = await supabase
+    .from("classes")
+    .update(newClassData)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function updateClassStatus({
+  id,
+  status,
+}: {
+  id: number;
+  status: "inactive" | "archived";
+}) {
+  const { data, error } = await supabase
+    .from("classes")
+    .update({ status })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

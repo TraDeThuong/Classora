@@ -9,6 +9,29 @@ export async function addStudentToClass({
   classId,
   studentId,
 }: AddStudentToClassData) {
+  const { data: classData, error: classError } = await supabase
+    .from("classes")
+    .select("max_students")
+    .eq("id", classId)
+    .single();
+
+  if (classError) {
+    throw new Error("Could not load class information");
+  }
+
+  const { count, error: countError } = await supabase
+    .from("class_students")
+    .select("*", { count: "exact", head: true })
+    .eq("class_id", classId);
+
+  if (countError) {
+    throw new Error("Could not count students");
+  }
+
+  if ((count ?? 0) >= classData.max_students) {
+    throw new Error("Class is full");
+  }
+
   const { data, error } = await supabase
     .from("class_students")
     .insert([

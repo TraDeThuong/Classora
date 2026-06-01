@@ -1,8 +1,5 @@
+import TeacherProfile from "../features/profile/TeacherProfile";
 
 export default function Profile() {
-  return (
-    <div>
-      Profile page 
-    </div>
-  )
+  return <TeacherProfile />;
 }

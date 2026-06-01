@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteClassStudent } from "../../services/apiClassStudents";
+import toast from "react-hot-toast";
 
 export function useDeleteClassStudent(classId: number) {
   const queryClient = useQueryClient();
@@ -19,6 +20,7 @@ export function useDeleteClassStudent(classId: number) {
       queryClient.invalidateQueries({
         queryKey: ["students", "search"],
       });
+      toast.success ("Student removed to class successfully")
     },
   });
 

@@ -1,3 +1,4 @@
+import type { Teacher } from "../types/teachers";
 import supabase from "./supabase";
 
 
@@ -162,4 +163,39 @@ export async function logout() {
   const { error } = await supabase.auth.signOut();
 
   if (error) throw new Error(error.message);
+}
+
+export interface UpdateTeacherProfileData {
+  full_name?: string;
+  avatar_url?: string;
+  bio?: string;
+  phone?: string;
+  degree?: string;
+  specialization?: string;
+}
+
+export async function updateCurrentTeacherProfile(
+  updatedData: UpdateTeacherProfileData,
+) {
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError) throw new Error(authError.message);
+  if (!user) throw new Error("No authenticated user found");
+
+  const { data, error } = await supabase
+    .from("teachers")
+    .update(updatedData)
+    .eq("auth_user_id", user.id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("updateTeacherProfileError:", error);
+    throw new Error("Profile could not be updated");
+  }
+
+  return data;
 }

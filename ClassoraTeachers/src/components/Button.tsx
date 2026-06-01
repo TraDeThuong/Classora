@@ -7,6 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   icon?: ReactNode;
+  disabled?: boolean;
 }
 
 const sizes = {
@@ -34,11 +35,13 @@ export default function Button({
   onClick,
   type = "button",
   icon,
+  disabled = false
 }: ButtonProps) {
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`
         inline-flex items-center gap-2
         border-0 cursor-pointer

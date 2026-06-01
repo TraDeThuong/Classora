@@ -2,7 +2,6 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import FormRow from "../../components/FormRow";
 import FormInput from "../../components/FormInput";
 import FormTextarea from "../../components/FormTextarea";
-import FormSelect from "../../components/FormSelect";
 import FileInput from "../../components/FileInput";
 import { useCreateClass } from "./useCreateClass";
 
@@ -16,7 +15,6 @@ interface ClassFormValues {
   startDate: string;
   endDate: string;
   maxStudents: number;
-  status: "active" | "inactive" | "completed" | "archived";
   room: string;
   image: FileList;
 }
@@ -36,7 +34,6 @@ export default function CreateClassForm({ onCloseModal }: CreateClassFormProps) 
       startDate: "",
       endDate: "",
       maxStudents: 30,
-      status: "active",
       room: "",
     },
   });
@@ -50,7 +47,7 @@ export default function CreateClassForm({ onCloseModal }: CreateClassFormProps) 
         room: data.room || null,
         start_date: data.startDate,
         end_date: data.endDate,
-        status: data.status,
+        status: "inactive",
         thumbnail: data.image,
       },
       {
@@ -58,14 +55,20 @@ export default function CreateClassForm({ onCloseModal }: CreateClassFormProps) 
           reset();
           onCloseModal?.();
         },
-      }
+      },
     );
   };
+
+  const today = new Date().toISOString().slice(0, 10);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <FormRow label="Class name" error={errors.name?.message}>
-        <FormInput {...register("name", { required: "Class name is required" })} />
+        <FormInput
+          {...register("name", {
+            required: "Class name is required",
+          })}
+        />
       </FormRow>
 
       <FormRow label="Maximum Students" error={errors.maxStudents?.message}>
@@ -74,13 +77,20 @@ export default function CreateClassForm({ onCloseModal }: CreateClassFormProps) 
           {...register("maxStudents", {
             required: "Maximum Students is required",
             valueAsNumber: true,
-            min: { value: 1, message: "Must be at least 1 student" },
+            min: {
+              value: 1,
+              message: "Must be at least 1 student",
+            },
           })}
         />
       </FormRow>
 
       <FormRow label="Online Meeting Link" error={errors.room?.message}>
-        <FormInput {...register("room", { required: "Meeting link is required" })} />
+        <FormInput
+          {...register("room", {
+            required: "Meeting link is required",
+          })}
+        />
       </FormRow>
 
       <FormRow label="Description">
@@ -92,35 +102,67 @@ export default function CreateClassForm({ onCloseModal }: CreateClassFormProps) 
           id="image"
           accept="image/*"
           type="file"
-          {...register("image", { required: "Image is required" })}
+          {...register("image", {
+            required: "Image is required",
+          })}
         />
       </FormRow>
 
       <div className="grid grid-cols-2 gap-4">
         <FormRow label="Start date" error={errors.startDate?.message}>
-          <FormInput type="date" {...register("startDate", { required: "Start date is required" })} />
+          <FormInput
+            type="date"
+            min={today}
+            {...register("startDate", {
+              required: "Start date is required",
+              validate: (startDate) => {
+                if (startDate < today) {
+                  return "Start date cannot be in the past";
+                }
+
+                return true;
+              },
+            })}
+          />
         </FormRow>
 
         <FormRow label="End date" error={errors.endDate?.message}>
-          <FormInput type="date" {...register("endDate", { required: "End date is required" })} />
+          <FormInput
+            type="date"
+            min={today}
+            {...register("endDate", {
+              required: "End date is required",
+              validate: (endDate, formValues) => {
+                if (endDate < today) {
+                  return "End date cannot be in the past";
+                }
+
+                if (!formValues.startDate) return true;
+
+                return (
+                  endDate >= formValues.startDate ||
+                  "End date must be after start date"
+                );
+              },
+            })}
+          />
         </FormRow>
       </div>
 
-      <FormRow label="Status">
-        <FormSelect {...register("status")}>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-          <option value="completed">Completed</option>
-          <option value="archived">Archived</option>
-        </FormSelect>
-      </FormRow>
-
       <div className="mt-4 flex justify-end gap-4">
-        <button type="button" onClick={onCloseModal} className="rounded-2xl border border-white/20 px-6 py-3 text-xl font-medium text-white/70 transition-all hover:bg-white/10 focus:outline-none">
+        <button
+          type="button"
+          onClick={onCloseModal}
+          className="rounded-2xl border border-white/20 px-6 py-3 text-xl font-medium text-white/70 transition-all hover:bg-white/10 focus:outline-none"
+        >
           Cancel
         </button>
 
-        <button type="submit" disabled={isCreating} className="rounded-2xl bg-brand-200 px-6 py-3 text-xl font-semibold text-white transition-all hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none">
+        <button
+          type="submit"
+          disabled={isCreating}
+          className="rounded-2xl bg-brand-200 px-6 py-3 text-xl font-semibold text-white transition-all hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none"
+        >
           {isCreating ? "Creating..." : "Create class"}
         </button>
       </div>

@@ -1,12 +1,14 @@
 import { ClassStatus } from "../../components/ClassStatus";
 import type { Class } from "../../types/classes";
 import { Link } from "react-router-dom";
+import { getClassStatus } from "../../utils/getClassStatus";
 
 interface ClassCardProps {
   classItem: Class;
 }
 
 export default function ClassCard({ classItem }: ClassCardProps) {
+  const displayStatus = getClassStatus(classItem);
   return (
     <Link to={`/classes/${classItem.id}`} className="group block w-full">
       <div className="
@@ -34,7 +36,7 @@ export default function ClassCard({ classItem }: ClassCardProps) {
           "/>
           {/* status badge float trên thumbnail */}
           <div className="absolute bottom-3 left-3">
-            <ClassStatus status={classItem.status} />
+            <ClassStatus status={displayStatus} />
           </div>
         </div>
 
