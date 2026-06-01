@@ -17,6 +17,8 @@ export default function LoginForm() {
         loginUser(data);
     }
 
+
+
   return (
         <form
           onSubmit={handleSubmit (onSubmit)}
@@ -65,9 +67,12 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            className=" w-full rounded-xl  bg-brand-200 py-3 font-semibold text-white  transition-all duration-300  hover:bg-brand-100  active:scale-95">
-            Log In
+            disabled={isPending}
+            className="flex w-full items-center justify-center rounded-xl bg-brand-200 py-3 font-semibold text-white transition-all duration-300 hover:bg-brand-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isPending ? "Logging in..." : "Log In"}
           </button>
+
         </form>
   )
 }

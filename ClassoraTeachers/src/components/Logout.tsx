@@ -4,8 +4,6 @@ import ButtonIcon from "./ButtonIcon"
 import { MiniSpinner } from "./MiniSpinner"
 import { useLogout } from "../features/authentication/useLogout"
 
-
-
 export default function Logout() {
 
     const {logout, isPending: isLoadingOut} = useLogout ()

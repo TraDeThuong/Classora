@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 interface ButtonIconProps {
   children: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export default function ButtonIcon({

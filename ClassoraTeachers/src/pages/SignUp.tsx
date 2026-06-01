@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import {signInWithGoogleForSignup } from "../services/apiAuth";
 import { useGoogleLogin } from "../features/authentication/useGoogleLogin";
 import { useSignUp } from "../features/authentication/useSignup";
 import { MiniSpinner } from "../components/MiniSpinner";
@@ -19,7 +18,7 @@ export default function SignUp() {
     register,
     handleSubmit,
     getValues,
-    watch,
+    // watch,
     formState: { errors },
   } = useForm<SignUpFormData>({
     defaultValues: {
@@ -193,7 +192,7 @@ export default function SignUp() {
         <button
           type="button"
           disabled={isGoogleLoading}
-          onClick={() => signInWithGoogleForSignup()}
+          onClick={() => googleLogin()}
           className="flex w-full items-center justify-center gap-3 rounded-xl bg-white py-3 font-semibold text-brand-300 transition-all duration-300 hover:bg-white/90 active:scale-95 disabled:opacity-60"
         >
           {isGoogleLoading && <MiniSpinner color="primary" />}

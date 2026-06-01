@@ -27,6 +27,7 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  // throw new Error("Test Error Boundary");
   return (
     <QueryClientProvider client = {queryClient}>
       <BrowserRouter>

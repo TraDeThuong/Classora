@@ -1,7 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import useTeacher from "../features/authentication/useTeacher";
-import Spinner  from "./Spinner";
 import FullPageLoader from "./FullPageLoader";
 
 interface ProtectRouteProps {

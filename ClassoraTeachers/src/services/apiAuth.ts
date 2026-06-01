@@ -1,4 +1,3 @@
-import type { Teacher } from "../types/teachers";
 import supabase from "./supabase";
 
 
