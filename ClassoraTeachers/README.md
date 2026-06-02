@@ -13,7 +13,6 @@ This repository contains the frontend application only.
 - Class management: create, update, view classes and class details
 - Student management: list, add, and manage students per class
 - Assignment management: create, edit, publish/unpublish, and grade assignments
-- Results dashboard and per-student reports
 - File upload / download and basic document handling
 - Client-side caching and background fetching using TanStack Query
 
