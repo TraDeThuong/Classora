@@ -20,6 +20,14 @@ interface ScheduleFormData {
   note?: string;
 }
 
+function formatLocalDate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 export default function CreateScheduleForm({
   selectedDate,
    onCloseModal,
@@ -28,7 +36,7 @@ export default function CreateScheduleForm({
   const [selectedClassId, setSelectedClassId] = useState("");
   const { createScheduleMutate, isCreating } = useCreateSchedule();
 
-  const formattedDate = selectedDate.toISOString().split("T")[0];
+  const formattedDate = formatLocalDate(selectedDate);
 
   const {
     register,
@@ -176,7 +184,7 @@ export default function CreateScheduleForm({
 
             <input
             type="date"
-            min={new Date().toISOString().split("T")[0]}
+            min={formatLocalDate(new Date())}
             {...register("teaching_date", {
                 required: "Teaching date is required",
 
