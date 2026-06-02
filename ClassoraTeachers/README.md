@@ -12,8 +12,8 @@ This repository contains the frontend application only.
 - User authentication (email/password + Google OAuth via Supabase)
 - Class management: create, update, view classes and class details
 - Student management: list, add, and manage students per class
-- Assignment management: create, edit, publish/unpublish, and grade assignments
-- File upload / download and basic document handling
+- Assignment management: create, edit, publish/unpublish
+- File upload and basic document handling
 - Client-side caching and background fetching using TanStack Query
 
 ## Technology stack
