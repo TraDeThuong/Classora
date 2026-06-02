@@ -43,7 +43,7 @@ export default function TotalItems({
   return (
     <div className="
       flex flex-col items-center gap-3 rounded-2xl flex-1 min-w-40
-      border border-gray-100 bg-white p-6
+      border border-gray-100 bg-white p-6 justify-center 
       cursor-pointer select-none
       transition-all duration-300 ease-[cubic-bezier(.34,1.56,.64,1)]
       hover:-translate-y-1 hover:scale-[1.03] hover:shadow-lg hover:border-gray-200
@@ -52,7 +52,7 @@ export default function TotalItems({
       <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${iconClass}`}>
         {icon}
       </div>
-      <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+      <span className="sm:text-xl text-xs font-semibold uppercase tracking-widest text-gray-400">
         {totalname}
       </span>
       <span ref={valueRef} className={`text-4xl font-bold ${valueClass}`}>

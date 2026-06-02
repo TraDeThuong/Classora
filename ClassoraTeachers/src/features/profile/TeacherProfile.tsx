@@ -39,7 +39,7 @@ export default function TeacherProfile() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-20 grid w-[calc(100%-10rem)] grid-cols-1 gap-8 lg:grid-cols-[32rem_1fr]"
+      className="mx-auto grid w-full max-w-480 grid-cols-1 gap-5 px-2 sm:gap-8 sm:px-4 lg:grid-cols-[32rem_1fr]"
     >
       <div className="rounded-3xl border border-white/20 bg-white/10 p-8 text-center shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1  hover:shadow-2xl hover:border-brand-200/40">
         <img

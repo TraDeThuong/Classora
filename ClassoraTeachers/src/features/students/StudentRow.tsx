@@ -38,52 +38,62 @@ export default function StudentRow({ student, classId }: StudentRowProps) {
   const avatar = studentData.avatar_url || getRandomAvatar(studentData.id);
   const status = statusConfig[student.status as StudentStatus] ?? statusConfig.inactive;
 
-  return (
-    <Table.Row>
-      <div>
-        <img
-          src={avatar}
-          alt={studentData.full_name}
-          className="h-10 w-10 rounded-full object-cover ring-2 ring-white"
-        />
-      </div>
+return (
+  <Table.Row>
+    <div>
+      <img
+        src={avatar}
+        alt={studentData.full_name}
+        className="
+          h-9 w-9 rounded-full object-cover ring-2 ring-white
+          sm:h-10 sm:w-10
+        "
+      />
+    </div>
 
-      <div className="font-semibold text-gray-800">
-        {studentData.full_name}
-      </div>
+    <div className="text-sm font-semibold text-gray-800 sm:text-2xl">
+      {studentData.full_name}
+    </div>
 
-      <div className="text-md text-gray-500">
-        {studentData.email}
-      </div>
+    <div className="text-sm text-gray-500 sm:text-2xl">
+      {studentData.email}
+    </div>
 
-      <div>
-        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-md font-semibold ${status.className}`}>
-          <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
-          {status.label}
-        </span>
-      </div>
+    <div>
+      <span
+        className={`
+          inline-flex items-center gap-1 rounded-full
+          px-2.5 py-1 text-xs font-semibold
+          sm:gap-1.5 sm:px-3 sm:text-2xl
+          ${status.className}
+        `}
+      >
+        <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+        {status.label}
+      </span>
+    </div>
 
-      <div>
-        <Modal>
-          <Menus.Menu>
-            <Menus.Toggle id={String(classStudentId)} />
+    <div>
+      <Modal>
+        <Menus.Menu>
+          <Menus.Toggle id={String(classStudentId)} />
 
-            <Menus.List id={String(classStudentId)}>
-              <Modal.Open opens="delete-student">
-                <Menus.Button icon={<HiTrash />}>Remove</Menus.Button>
-              </Modal.Open>
-            </Menus.List>
+          <Menus.List id={String(classStudentId)}>
+            <Modal.Open opens="delete-student">
+              <Menus.Button icon={<HiTrash />}>Remove</Menus.Button>
+            </Modal.Open>
+          </Menus.List>
 
-            <Modal.Window name="delete-student">
-              <ConfirmDelete
-                resourceName="student from this class"
-                disabled={isDeleting}
-                onConfirm={() => removeStudent(classStudentId)}
-              />
-            </Modal.Window>
-          </Menus.Menu>
-        </Modal>
-      </div>
-    </Table.Row>
-  );
+          <Modal.Window name="delete-student">
+            <ConfirmDelete
+              resourceName="student from this class"
+              disabled={isDeleting}
+              onConfirm={() => removeStudent(classStudentId)}
+            />
+          </Modal.Window>
+        </Menus.Menu>
+      </Modal>
+    </div>
+  </Table.Row>
+);
 }

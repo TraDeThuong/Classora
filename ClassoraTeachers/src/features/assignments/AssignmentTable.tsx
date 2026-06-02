@@ -18,7 +18,7 @@ export default function AssignmentTable() {
   if (!assignments.length) return <Empty resourceName="assignments" />;
 
   const classesMap = new Map(
-    classes.map((classItem) => [classItem.id, classItem])
+    classes.map((classItem) => [classItem.id, classItem]),
   );
 
   const classId = searchParams.get("class") || "all";
@@ -29,19 +29,19 @@ export default function AssignmentTable() {
 
   if (classId !== "all") {
     filteredAssignments = filteredAssignments.filter(
-      (assignment) => String(assignment.class_id) === classId
+      (assignment) => String(assignment.class_id) === classId,
     );
   }
 
   if (status !== "all") {
     filteredAssignments = filteredAssignments.filter(
-      (assignment) => assignment.status === status
+      (assignment) => assignment.status === status,
     );
   }
 
   if (type !== "all") {
     filteredAssignments = filteredAssignments.filter(
-      (assignment) => assignment.type === type
+      (assignment) => assignment.type === type,
     );
   }
 
@@ -51,32 +51,36 @@ export default function AssignmentTable() {
 
   return (
     <Menus>
-      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr 0.4fr">
-        <Table.Header>
-          <div></div>
-          <div>Title</div>
-          <div>Class Code</div>
-          <div>Type</div>
-          <div>Due Date</div>
-          <div>Status</div>
-          <div></div>
-        </Table.Header>
+      <div className="w-full overflow-x-auto rounded-3xl">
+        <div className="min-w-312">
+          <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr 0.4fr">
+            <Table.Header>
+              <div></div>
+              <div className="text-xs sm:text-sm lg:text-base">Title</div>
+              <div className="text-xs sm:text-sm lg:text-base">Class Code</div>
+              <div className="text-xs sm:text-sm lg:text-base">Type</div>
+              <div className="text-xs sm:text-sm lg:text-base">Due Date</div>
+              <div className="text-xs sm:text-sm lg:text-base">Status</div>
+              <div></div>
+            </Table.Header>
 
-        <Table.Body
-            data={filteredAssignments}
-            render={(assignment) => {
+            <Table.Body
+              data={filteredAssignments}
+              render={(assignment) => {
                 const classItem = classesMap.get(assignment.class_id);
 
                 return (
-                <AssignmentRow
+                  <AssignmentRow
                     key={assignment.id}
                     assignment={assignment}
                     classCode={classItem?.class_code ?? "N/A"}
-                />
+                  />
                 );
-            }}
+              }}
             />
-      </Table>
+          </Table>
+        </div>
+      </div>
     </Menus>
   );
 }

@@ -95,7 +95,12 @@ export async function completeGoogleSignup(password: string) {
     password,
   });
 
-  if (passwordError) throw new Error(passwordError.message);
+  if (
+    passwordError &&
+    !passwordError.message.includes("New password should be different")
+  ) {
+    throw new Error(passwordError.message);
+  }
 
   const { error: profileError } = await supabase.from("teachers").upsert(
     {

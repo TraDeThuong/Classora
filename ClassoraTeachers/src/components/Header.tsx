@@ -4,15 +4,24 @@ import Logo from "./Logo";
 
 export default function Header() {
   return (
-    <header className="flex h-30 items-center justify-between px-8">
-    
-        <Logo/>
+    <header
+      className="
+        flex items-center justify-between
+        h-16 px-3
+        sm:h-20 sm:px-6
+        lg:h-24 lg:px-8
+      "
+    >
+      {/* Logo */}
+      <div className="min-w-0 flex-1">
+        <Logo />
+      </div>
 
-        <div className="flex items-center gap-4">
-            <UserAvatar />
-            <Logout />
-        </div>
-
+      {/* Right side */}
+      <div className="ml-3 flex shrink-0 items-center gap-2 sm:gap-4">
+        <UserAvatar />
+        <Logout />
+      </div>
     </header>
   );
 }

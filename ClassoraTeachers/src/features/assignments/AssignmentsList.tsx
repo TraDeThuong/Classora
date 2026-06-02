@@ -1,4 +1,5 @@
 import type { Assignment } from "../../types/assignments";
+import AddAssignments from "./AddAssignments";
 import AssignmentCard from "./AssignmentCard";
 
 interface AssignmentsListProps {
@@ -20,7 +21,12 @@ export default function AssignmentsList({
         shadow-xl mb-20
       "
     >
+      <div className = "flex justify-end">
+        <AddAssignments/>
+      </div>
+      
       <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+
         <div>
           <h2 className="text-4xl font-bold text-brand-200">
             Assignments
@@ -30,6 +36,7 @@ export default function AssignmentsList({
             Manage and track assignments for this class
           </p>
         </div>
+
 
         <span
           className="

@@ -3,7 +3,6 @@ import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Classes from "./pages/Classes";
 import Login from "./pages/Login";
-import Results from "./pages/Results";
 import SignUp from "./pages/SignUp";
 import PageNotFound from "./pages/PageNotFound";
 import Test from "./pages/Test";
@@ -41,7 +40,6 @@ export default function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="account" element={<Account />} />
             <Route path="classes" element={<Classes />} />
-            <Route path="results" element={<Results />} />
             <Route path="assignments" element={<Assignments />} />
             <Route path="profile" element={<Profile />} />
             <Route path="/classes/:classId" element={<ClassDetail />} />

@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 const sizes = {
-  small:  "text-[1.1rem] px-[1rem] py-[0.5rem] uppercase tracking-widest font-semibold rounded-lg",
+  small:  "text-[1.1rem] px-[1rem] py-[0.5rem] font-semibold rounded-lg",
   medium: "text-[1.3rem] px-[1.8rem] py-[1rem] font-medium rounded-[10px]",
   large:  "text-[1.5rem] px-[2.6rem] py-[1.2rem] font-medium rounded-xl",
 };

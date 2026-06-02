@@ -19,13 +19,13 @@ export default function Total() {
     );
 
   const stats = [
-    { totalname: "Total Classes",     total: classes.length,     icon: <HiAcademicCap />,  color: "purple" },
-    { totalname: "Total Students",    total: students.length,    icon: <FaPeopleLine />,   color: "teal"   },
-    { totalname: "Total Assignments", total: assignments.length, icon: <HiClipboardList />, color: "amber" },
+    { totalname: "Classes",     total: classes.length,     icon: <HiAcademicCap />,   color: "purple" },
+    { totalname: "Students",    total: students.length,    icon: <FaPeopleLine />,    color: "teal"   },
+    { totalname: "Assignments", total: assignments.length, icon: <HiClipboardList />, color: "amber"  },
   ] as const;
 
   return (
-    <div className="mb-8 flex flex-wrap gap-4">
+    <div className="mb-8 grid grid-cols-3 gap-3 sm:gap-4">
       {stats.map((stat) => (
         <TotalItems key={stat.totalname} {...stat} />
       ))}

@@ -1,48 +1,4 @@
-// import Filter from "../../components/Filter";
 
-// export default function AssignmentTableOperations() {
-//   return (
-//     <div
-//       className="
-//         my-6 rounded-3xl border border-white/20
-//         bg-white/10 p-4 shadow-lg backdrop-blur-xl flex flex-col 
-//         sm:my-8 sm:p-5 md:flex-row md:flex-wrap md:items-end md:justify-center gap-20
-//       "
-//     >
-//       <Filter
-//         label="Class"
-//         filterField="class"
-//         options={[
-//           { value: "all", label: "All classes" },
-//           { value: "react", label: "React" },
-//           { value: "nodejs", label: "NodeJS" },
-//           { value: "javascript", label: "JavaScript" },
-//         ]}
-//       />
-
-//       <Filter
-//         label="Status"
-//         filterField="status"
-//         options={[
-//           { value: "all", label: "All status" },
-//           { value: "draft", label: "Draft" },
-//           { value: "active", label: "Active" },
-//           { value: "closed", label: "Closed" },
-//         ]}
-//       />
-
-//       <Filter
-//         label="Type"
-//         filterField="type"
-//         options={[
-//           { value: "all", label: "All types" },
-//           { value: "mcq", label: "Multiple choice" },
-//           { value: "essay", label: "Essay" },
-//         ]}
-//       />
-//     </div>
-//   );
-// }
 
 import Filter from "../../components/Filter";
 import { useClasses } from "../classes/useClasses";
@@ -94,17 +50,26 @@ export default function AssignmentTableOperations() {
   return (
     <div
       className="
-        my-6 flex flex-col gap-6
-        rounded-3xl border border-white/20
+        my-4 grid grid-cols-1 gap-4
+        rounded-2xl border border-white/20
         bg-white/10 p-4 shadow-lg backdrop-blur-xl
 
-        sm:my-8 sm:p-5
-        md:flex-row md:flex-wrap md:items-end md:justify-center md:gap-20
+        sm:my-6 sm:grid-cols-2 sm:gap-5 sm:p-5
+        lg:my-8 lg:grid-cols-3 lg:gap-6
+        xl:rounded-3xl
       "
     >
-      <Filter label="Class" filterField="class" options={classOptions} />
-      <Filter label="Status" filterField="status" options={statusOptions} />
-      <Filter label="Type" filterField="type" options={typeOptions} />
+      <div className="w-full">
+        <Filter label="Class" filterField="class" options={classOptions} />
+      </div>
+
+      <div className="w-full">
+        <Filter label="Status" filterField="status" options={statusOptions} />
+      </div>
+
+      <div className="w-full">
+        <Filter label="Type" filterField="type" options={typeOptions} />
+      </div>
     </div>
   );
 }

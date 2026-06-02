@@ -42,18 +42,18 @@ export default function AssignmentCard({ assignment }: AssignmentCardProps) {
           </span>
         </div>
 
-        <p className="line-clamp-2 text-sm leading-relaxed text-gray-400">
+        <p className="line-clamp-2 text-xl leading-relaxed text-gray-400">
           {assignment.description || "No description for this assignment."}
         </p>
       </div>
 
       <div className="mt-5 space-y-2 border-t border-gray-100 pt-4">
-        <div className="flex items-center justify-between text-md">
+        <div className="flex items-center justify-between text-xl">
           <span className="text-gray-400">Due date</span>
           <span className="font-medium text-gray-700">{dueDate}</span>
         </div>
 
-        <div className="flex items-center justify-between text-md">
+        <div className="flex items-center justify-between text-xl">
           <span className="text-gray-400">Status</span>
           <span className={`rounded-full px-3 py-1 text-[11px] font-semibold ${status.className}`}>
             {status.label}

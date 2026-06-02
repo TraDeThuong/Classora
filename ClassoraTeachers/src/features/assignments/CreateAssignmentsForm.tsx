@@ -217,6 +217,8 @@ export default function CreateAssignmentsForm({onCloseModal, assignmentToEdit} :
   };
 
   return (
+  <div className = "flex flex-col items-center">
+    <h1 className = "font-bold mb-5 text-brand-100 " >CREATE ASSIGNMENT </h1>
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 max-h-[80vh] overflow-y-auto space-y-6">
       <FormRow label="Class" error={errors.classId?.message}>
         <FormSelect
@@ -494,5 +496,6 @@ export default function CreateAssignmentsForm({onCloseModal, assignmentToEdit} :
         </button>
       </div>
     </form>
+  </div>
   );
 }

@@ -69,78 +69,96 @@ export default function Calendar() {
   setSelectedDate(date);
 }
 
-  return (
-    <div className="min-h-160 w-full rounded-4xl border border-white/10 bg-gradient-brand-200 p-8 shadow-xl shadow-black/10">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h2 className="text-[2.4rem] font-bold text-white">Calendar</h2>
-          <p className="text-[1.4rem] text-white/70">
-            Manage your teaching schedules
-          </p>
-        </div>
+return (
+  <div
+    className="
+      min-h-160 w-full rounded-3xl border border-white/10
+      bg-gradient-brand-200 p-4 shadow-xl shadow-black/10
+      sm:p-6 lg:min-h-256 lg:rounded-4xl lg:p-8
+    "
+  >
+    <div
+      className="
+        mb-8 flex gap-4 flex-row items-center justify-between
+      "
+    >
+      <div>
+        <h2 className="text-2xl font-bold text-white sm:text-3xl lg:text-[2.4rem]">
+          Calendar
+        </h2>
 
+        <p className="text-sm text-white/70 sm:text-base lg:text-[1.4rem]">
+          Manage your teaching schedules
+        </p>
+      </div>
+
+      <div className="w-full sm:w-auto">
         <AddNewSchedule selectedDate={selectedDate} />
       </div>
+    </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
-          <div className="mb-6 flex items-center justify-between">
-            <button
-              onClick={handlePrevMonth}
-              className="rounded-xl bg-white/10 px-4 py-2 text-white hover:bg-white/20"
-            >
-              ←
-            </button>
+    <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
+      <div className="rounded-2xl border border-white/10 bg-white/10 p-3 backdrop-blur-xl sm:p-5 lg:rounded-3xl lg:p-6">
+        <div className="mb-4 flex items-center justify-between gap-3 sm:mb-6">
+          <button
+            onClick={handlePrevMonth}
+            className="rounded-xl bg-white/10 px-3 py-2 text-sm text-white hover:bg-white/20 sm:px-4 sm:text-base"
+          >
+            ←
+          </button>
 
-            <h3 className="text-[2rem] font-semibold text-white">
-              {monthNames[currentMonth]} {currentYear}
-            </h3>
+          <h3 className="text-center text-lg font-semibold text-white sm:text-2xl lg:text-[2rem]">
+            {monthNames[currentMonth]} {currentYear}
+          </h3>
 
-            <button
-              onClick={handleNextMonth}
-              className="rounded-xl bg-white/10 px-4 py-2 text-white hover:bg-white/20"
-            >
-              →
-            </button>
-          </div>
-
-          <div className="mb-4 grid grid-cols-7 gap-2">
-            {weekdays.map((day) => (
-              <div
-                key={day}
-                className="py-3 text-center text-[1.3rem] font-semibold text-white/60"
-              >
-                {day}
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-7 gap-2">
-            {calendarDays.map((date, index) =>
-              date ? (
-                <CalendarDay
-                  key={index}
-                  date={date}
-                  isSelected={isSameDate(date, selectedDate)}
-                  isToday={isSameDate(date, new Date())}
-                  hasSchedule={hasSchedule(date)}
-                  onClick={() => handleSelectDate(date)}
-                />
-              ) : (
-                <div
-                  key={index}
-                  className="aspect-square rounded-2xl bg-white/2"
-                />
-              ),
-            )}
-          </div>
+          <button
+            onClick={handleNextMonth}
+            className="rounded-xl bg-white/10 px-3 py-2 text-sm text-white hover:bg-white/20 sm:px-4 sm:text-base"
+          >
+            →
+          </button>
         </div>
 
-        <SchedulePanel   
+        <div className="mb-2 grid grid-cols-7 gap-1 sm:mb-4 sm:gap-2">
+          {weekdays.map((day) => (
+            <div
+              key={day}
+              className="py-2 text-center text-xs font-semibold text-white/60 sm:py-3 sm:text-sm lg:text-[1.3rem]"
+            >
+              {day}
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-7 gap-1 sm:gap-2">
+          {calendarDays.map((date, index) =>
+            date ? (
+              <CalendarDay
+                key={index}
+                date={date}
+                isSelected={isSameDate(date, selectedDate)}
+                isToday={isSameDate(date, new Date())}
+                hasSchedule={hasSchedule(date)}
+                onClick={() => handleSelectDate(date)}
+              />
+            ) : (
+              <div
+                key={index}
+                className="aspect-square rounded-lg bg-white/2 sm:rounded-2xl"
+              />
+            ),
+          )}
+        </div>
+      </div>
+
+      <div className="w-full">
+        <SchedulePanel
           selectedDate={selectedDate}
           schedules={schedulesByDate}
-          isLoading={isLoadingSchedulesByDate} />
+          isLoading={isLoadingSchedulesByDate}
+        />
       </div>
     </div>
-  );
+  </div>
+);
 }

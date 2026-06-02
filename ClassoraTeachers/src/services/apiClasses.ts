@@ -1,5 +1,6 @@
 import { generateClassCode } from "../utils/generateClassCode";
 import supabase from "./supabase";
+import { getClassStatus } from "../utils/getClassStatus";
 
 interface NewClass {
   class_name: string;
@@ -111,7 +112,34 @@ export async function getClasses() {
     // console.log("teacher id:", teacher.id);
     // console.log("classes:", data);
 
-  return data;
+  const classesWithUpdatedStatus = await Promise.all(
+  data.map(async (classItem) => {
+    const computedStatus = getClassStatus(classItem);
+
+    if (classItem.status === computedStatus) {
+      return classItem;
+    }
+
+    const { data: updatedClass, error: updateError } = await supabase
+      .from("classes")
+      .update({ status: computedStatus })
+      .eq("id", classItem.id)
+      .select()
+      .single();
+
+    if (updateError) {
+      console.error("update class status error:", updateError);
+      return {
+        ...classItem,
+        status: computedStatus,
+      };
+    }
+
+    return updatedClass;
+  })
+);
+
+return classesWithUpdatedStatus;
 }
 
 export async function getClassByClassId(classId: number) {
