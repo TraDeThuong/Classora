@@ -5,10 +5,6 @@ import AddStudentForm from "./AddStudentForm";
 
 interface AddStudentProps {
   classId: number;
-}
-
-interface AddStudentProps {
-  classId: number;
   currentStudents: number;
   maxStudents: number;
 }
@@ -38,7 +34,7 @@ export default function AddStudent({ classId, currentStudents, maxStudents }: Ad
         </Modal.Open>
 
         {!isFull && (
-          <Modal.Window name="student-form">
+          <Modal.Window name="student-form" size="md">
             <AddStudentForm classId={classId} />
           </Modal.Window>
         )}

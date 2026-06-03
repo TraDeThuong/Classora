@@ -158,7 +158,7 @@ return (
             <CreateAssignmentsForm assignmentToEdit={assignment} />
           </Modal.Window>
 
-          <Modal.Window name="delete">
+          <Modal.Window name="delete" size="sm">
             <ConfirmDelete
               resourceName="assignments"
               disabled={isDeleting}
@@ -166,7 +166,7 @@ return (
             />
           </Modal.Window>
 
-          <Modal.Window name="published">
+          <Modal.Window name="published" size="sm">
             <ConfirmStatusAction
               status="published"
               title="Publish assignment"
@@ -177,7 +177,7 @@ return (
             />
           </Modal.Window>
 
-          <Modal.Window name="archived">
+          <Modal.Window name="archived" size="sm">
             <ConfirmStatusAction
               status="archived"
               title="Archive assignment"
@@ -188,7 +188,7 @@ return (
             />
           </Modal.Window>
 
-          <Modal.Window name="draft">
+          <Modal.Window name="draft" size="sm">
             <ConfirmStatusAction
               status="draft"
               title="Move to draft"

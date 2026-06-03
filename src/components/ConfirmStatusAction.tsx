@@ -21,13 +21,18 @@ export default function ConfirmStatusAction({
   onCloseModal,
 }: ConfirmStatusActionProps) {
   return (
-    <div className="flex w-160 flex-col gap-5">
-      <h3>{title}</h3>
+    <div className="flex w-full flex-col gap-3 text-brand-300">
+      <h3 className="pr-8 text-3xl font-bold leading-tight ">
+        {title}
+      </h3>
 
-      <p className="mb-5 text-grey-300">{message}</p>
+      <p className="text-xl leading-relaxed text-white/70 sm:text-base">
+        {message}
+      </p>
 
-      <div className="flex justify-end gap-5">
+      <div className="mt-2 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end [&>button]:justify-center">
         <Button
+          size="small"
           variation="secondary"
           disabled={disabled}
           onClick={onCloseModal}
@@ -36,14 +41,15 @@ export default function ConfirmStatusAction({
         </Button>
 
         <Button
-        variation={confirmVariation}
-        disabled={disabled}
-        onClick={() => {
+          size="small"
+          variation={confirmVariation}
+          disabled={disabled}
+          onClick={() => {
             onConfirm();
             onCloseModal?.();
-        }}
+          }}
         >
-        {confirmLabel}
+          {confirmLabel}
         </Button>
       </div>
     </div>

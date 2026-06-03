@@ -15,16 +15,19 @@ export default function ConfirmDelete({
   onCloseModal,
 }: ConfirmDeleteProps) {
   return (
-    <div className="flex w-160 flex-col gap-5">
-      <h3>Delete {resourceName}</h3>
+    <div className="flex w-full flex-col gap-3 text-brand-300">
+      <h3 className="pr-8 text-xl font-bold leading-tight sm:text-2xl">
+        Delete {resourceName}
+      </h3>
 
-      <p className="mb-5 text-grey-300">
+      <p className="text-sm leading-relaxed text-white/70 sm:text-base">
         Are you sure you want to delete this {resourceName} permanently? This
         action cannot be undone.
       </p>
 
-      <div className="flex justify-end gap-5">
+      <div className="mt-2 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end [&>button]:justify-center">
         <Button
+          size="small"
           variation="secondary"
           disabled={disabled}
           onClick={onCloseModal}
@@ -33,6 +36,7 @@ export default function ConfirmDelete({
         </Button>
 
         <Button
+          size="small"
           variation="danger"
           disabled={disabled}
           onClick={onConfirm}

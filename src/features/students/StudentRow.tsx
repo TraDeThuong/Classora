@@ -83,7 +83,7 @@ return (
             </Modal.Open>
           </Menus.List>
 
-          <Modal.Window name="delete-student">
+          <Modal.Window name="delete-student" size="sm">
             <ConfirmDelete
               resourceName="student from this class"
               disabled={isDeleting}

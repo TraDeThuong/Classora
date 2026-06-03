@@ -69,7 +69,7 @@ export default function ScheduleCard({ schedule}: ScheduleCardProps) {
                 </Menus.List>
               </Menus.Menu>
 
-              <Modal.Window name="delete">
+              <Modal.Window name="delete" size="sm">
                 <ConfirmDelete
                   resourceName="schedule"
                   disabled={isDeleting}
@@ -77,7 +77,7 @@ export default function ScheduleCard({ schedule}: ScheduleCardProps) {
                 />
               </Modal.Window>
 
-              <Modal.Window name="completed">
+              <Modal.Window name="completed" size="sm">
                 <ConfirmStatusAction
                   title="Mark as completed"
                   message="Are you sure this schedule has been completed?"
@@ -93,7 +93,7 @@ export default function ScheduleCard({ schedule}: ScheduleCardProps) {
                 />
               </Modal.Window>
 
-              <Modal.Window name="cancelled">
+              <Modal.Window name="cancelled" size="sm">
                 <ConfirmStatusAction
                   title="Cancel schedule"
                   message="Are you sure you want to cancel this schedule?"
