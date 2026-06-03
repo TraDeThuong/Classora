@@ -2,7 +2,7 @@
 
 Classora là ứng dụng web quản lý lớp học dành cho giáo viên và học sinh. Ứng dụng hỗ trợ giáo viên quản lý lớp, học sinh, lịch học, bài tập và kết quả nộp bài; học sinh có thể tham gia lớp bằng mã lớp, xem lịch học, làm bài tập, nộp câu trả lời và xem điểm/feedback.
 
-Production URL: https://classora-teacher.vercel.app
+Production URL: https://classora-xva.vercel.app
 
 ## Mục Lục
 
