@@ -535,21 +535,6 @@ Schedule status:
 scheduled | completed | cancelled
 ```
 
-### Migrations
-
-Các migration hiện có:
-
-```text
-supabase/migrations/20260602113000_add_student_workflow_columns.sql
-supabase/migrations/20260602115000_fix_students_auth_user_id_unique_constraint.sql
-supabase/migrations/20260602120000_student_workflow_rls_policies.sql
-supabase/migrations/20260603100000_student_calendar_rls_policy.sql
-supabase/migrations/20260603103000_student_class_teacher_rls_policies.sql
-supabase/migrations/20260603110000_fix_results_nullable_submission_fields.sql
-supabase/migrations/20260603113000_teacher_result_grading_rls_policies.sql
-supabase/migrations/20260603120000_add_class_students_created_at.sql
-```
-
 Chạy theo đúng thứ tự trên trong Supabase SQL Editor hoặc bằng Supabase CLI nếu project đã link.
 
 Các migration này bổ sung:
