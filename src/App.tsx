@@ -20,6 +20,7 @@ import StudentLayout from "./features/student/StudentLayout";
 import StudentAuthCallback from "./features/student/StudentAuthCallback";
 import StudentLogin from "./pages/student/StudentLogin";
 import StudentSignup from "./pages/student/StudentSignup";
+import StudentCompleteSignUp from "./pages/student/StudentCompleteSignUp";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import StudentClasses from "./pages/student/StudentClasses";
 import StudentSchedules from "./pages/student/StudentSchedules";
@@ -96,6 +97,7 @@ export default function App() {
 
           <Route path="student/login" element={<StudentLogin />} />
           <Route path="student/signup" element={<StudentSignup />} />
+          <Route path="student/complete-signup" element={<StudentCompleteSignUp />} />
           <Route path="student/auth/callback" element={<StudentAuthCallback />} />
 
           <Route element={

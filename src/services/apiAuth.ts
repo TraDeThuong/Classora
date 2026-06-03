@@ -195,7 +195,7 @@ export async function signInWithGoogleForStudentSignup() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/student/auth/callback`,
+      redirectTo: `${window.location.origin}/student/complete-signup`,
     },
   });
 
@@ -263,6 +263,29 @@ export async function completeGoogleSignup(password: string) {
   if (profileError) throw new Error(profileError.message);
 
   return user;
+}
+
+export async function completeStudentGoogleSignup(password: string) {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError) throw new Error(userError.message);
+  if (!user) throw new Error("No logged in user");
+
+  const { error: passwordError } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (
+    passwordError &&
+    !passwordError.message.includes("New password should be different")
+  ) {
+    throw new Error(passwordError.message);
+  }
+
+  return ensureStudentProfile();
 }
 
 export async function login({email, password,}: {email: string;password: string;}) {

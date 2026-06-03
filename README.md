@@ -231,6 +231,7 @@ Classora là một Single Page Application được xây dựng bằng React, Ty
 | `/teacher/auth/callback` | Google OAuth callback cho teacher |
 | `/student/login` | Student login |
 | `/student/signup` | Student signup |
+| `/student/complete-signup` | Hoàn tất Google signup cho student |
 | `/student/auth/callback` | Google OAuth callback cho student |
 | `*` | Page not found |
 
@@ -288,10 +289,11 @@ Các route cũ như `/login`, `/signup`, `/dashboard`, `/classes`, `/assignments
 ### Student signup/login
 
 1. Student đăng ký bằng email/password hoặc Google OAuth.
-2. App tạo hoặc liên kết profile trong bảng `students`.
-3. Email được normalize về lowercase.
-4. Nếu email đã có student record nhưng chưa có `auth_user_id`, app cập nhật record đó.
-5. Nếu current user là teacher, app không cho đăng nhập vào student portal.
+2. Với Google OAuth, app redirect về `/student/complete-signup` để student tạo password cho app.
+3. Sau khi hoàn tất password, app tạo hoặc liên kết profile trong bảng `students`.
+4. Email được normalize về lowercase.
+5. Nếu email đã có student record nhưng chưa có `auth_user_id`, app cập nhật record đó.
+6. Nếu current user là teacher, app không cho đăng nhập vào student portal.
 
 ### Class workflow
 
@@ -349,9 +351,11 @@ Trong Supabase Dashboard:
 http://localhost:5173/teacher/auth/callback
 http://localhost:5173/teacher/complete-signup
 http://localhost:5173/student/auth/callback
+http://localhost:5173/student/complete-signup
 https://classora-teacher.vercel.app/teacher/auth/callback
 https://classora-teacher.vercel.app/teacher/complete-signup
 https://classora-teacher.vercel.app/student/auth/callback
+https://classora-teacher.vercel.app/student/complete-signup
 ```
 
 ### Storage
@@ -713,6 +717,7 @@ Kiểm tra redirect URLs trong Supabase Dashboard. Route teacher và student dù
 /teacher/auth/callback
 /teacher/complete-signup
 /student/auth/callback
+/student/complete-signup
 ```
 
 ### Student không join được class
