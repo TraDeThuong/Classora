@@ -6,6 +6,7 @@ Production URL: https://classora-teacher.vercel.app
 
 ## Mục Lục
 
+- [Hướng dẫn chạy dự án](#huong-dan-chay-du-an)
 - [Tổng quan](#tong-quan)
 - [Tính năng chính](#tinh-nang-chinh)
 - [Công nghệ sử dụng](#cong-nghe-su-dung)
@@ -18,6 +19,49 @@ Production URL: https://classora-teacher.vercel.app
 - [Kiểm thử thủ công](#kiem-thu-thu-cong)
 - [Deploy](#deploy)
 - [Troubleshooting](#troubleshooting)
+
+## Hướng Dẫn Chạy Dự Án
+
+### 1. Cài dependencies
+
+```bash
+npm install
+```
+
+### 2. Tạo file môi trường
+
+Tạo file `.env.local` ở thư mục root:
+
+```bash
+VITE_SUPABASE_URL=https://<your-project>.supabase.co
+VITE_SUPABASE_ANON_KEY=<public-anon-key>
+```
+
+### 3. Chạy development server
+
+```bash
+npm run dev
+```
+
+Mở trình duyệt tại:
+
+```text
+http://localhost:5173
+```
+
+### 4. Build production
+
+```bash
+npm run build
+```
+
+### 5. Preview production build
+
+```bash
+npm run preview
+```
+
+Lưu ý: để dùng đầy đủ tính năng auth, database, upload ảnh, join class và nộp bài, Supabase project cần được cấu hình đúng theo phần [Supabase và dữ liệu](#supabase-va-du-lieu).
 
 ## Tổng Quan
 
@@ -743,4 +787,3 @@ Vite có thể báo một số chunk lớn hơn 500 kB sau minify. Đây là war
 - Student routes nằm trong `src/pages/student`.
 - Khi thêm bảng/cột mới, nên thêm migration SQL vào `supabase/migrations`.
 - Khi thêm protected route mới, cập nhật `src/App.tsx` và route guard phù hợp.
-
